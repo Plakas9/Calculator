@@ -33,9 +33,14 @@ function CalculatorOperation(string){ // may need to split into two functions la
     return result;
 }  
 
+function populate(number){
+    const operations = document.querySelector(".operations");
+    console.log(operations);
+    operations.textContent = number.toString();
+    return +number;
+     
 
+}
 
 /* Dom Maniputlation*/
-
-
-const CalcContainer = document.querySelector("calcContainer");
+const num = populate(4);
