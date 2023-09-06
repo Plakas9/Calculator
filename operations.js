@@ -33,14 +33,20 @@ function CalculatorOperation(string){ // may need to split into two functions la
     return result;
 }  
 
-function populate(number){
+function populate(){
     const operations = document.querySelector(".operations");
-    console.log(operations);
-    operations.textContent = number.toString();
-    return +number;
+    let numberClicked = 0;
+    const buttonList = document.querySelectorAll(".button");
+    buttonList.forEach( e =>{
+        console.log(e);
+        e.addEventListener("click", ()=> {
+        console.log(e.value);  
+        });
+       
+    });
      
 
 }
 
 /* Dom Maniputlation*/
-const num = populate(4);
+const num = populate();
