@@ -12,7 +12,7 @@ function divide(a,b){
 }
 
 
-function CalculatorOperation(string){
+function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
     arr  = string.split('');
     console.log(arr);
     arr.forEach((element,i,array)=>{
@@ -22,8 +22,8 @@ function CalculatorOperation(string){
     });
     string = arr.join("");
     let operator = string[1];
-    let a = +string[0]; // have try catch for NaN/undefined
-    let b = +string[2]; // have try catch for Nan/undefined
+    let a = +string[0]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
+    let b = +string[2]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
     
     
     if(operator == "+") return  add(a,b); 
@@ -32,3 +32,10 @@ function CalculatorOperation(string){
     if(operator == "/") return divide(a,b);
     return result;
 }  
+
+
+
+/* Dom Maniputlation*/
+
+
+const CalcContainer = document.querySelector("calcContainer");

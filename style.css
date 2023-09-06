@@ -1,0 +1,29 @@
+body{
+    display: flex;
+}
+
+.calcContainer{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 10%;
+    
+}
+.allButton{
+    display: flex;
+    flex-direction: column;
+
+}
+.button{
+    height: 75px;
+    width: 75px;
+
+}
+.button#clear{
+    background-color: red;
+    
+}
+.row1{
+    display: flex;
+    justify-content: ;
+}
