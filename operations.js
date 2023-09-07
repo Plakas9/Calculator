@@ -67,7 +67,13 @@ function populate(){
         e.addEventListener("click", ()=> {
             
             
-            if(+e.value>= 0 || e.value == "."){ // dealing for case where button is a number
+            if(+e.value>= 0 || e.value == "."){ // dealing for case where button is a number or decimal.
+
+                if(term.charAt(term.length-1)=="." && e.value =="."){
+                    term = term.slice(0,-1);
+                    operatorDisplay.textContent = operatorDisplay.textContent.slice(0,-1);
+                }
+
                 if (operatorDisplay.textContent[0] == "0"){
 
                     operatorDisplay.textContent = e.value;
@@ -77,7 +83,7 @@ function populate(){
                     operatorDisplay.textContent += e.value;
                     term  += e.value;
                 }
-                
+                console.log(term);
             } 
             
             if(isOperator(e.value)){
@@ -86,18 +92,26 @@ function populate(){
                 if(isOperator(term.charAt(term.length-1))){
                     term = term.slice(0,-1); // remove so we can later replace with newly selected operator.
                 }
+                // 
                 term += e.value;
-                console.log(term);
-                resultDisplay.textContent = term.slice(0,-1);
+                
+                // Case#2: where we add an operator first
+                if(isOperator(term)){ 
+                    term = "0" + term;
+                }
+                //
+                
+                
+                resultDisplay.textContent = term.slice(0,-1); 
                 operatorDisplay.textContent = "0";
-                temTerm = term.slice(0,-1); // gets term without last inputed operator
+                temTerm = term.slice(0,-1); // gets term without last inputed operator (case for when two operators are selected) 
                 let operator = getOperator(temTerm);
-                console.log(isOperator(operator));
-                if(isOperator(operator)){ // 
+              
+                if(isOperator(operator)){ 
 
                     let arr = temTerm.split(operator);
                     console.log(arr.length);
-                    if(arr.length == 2){
+                    if(arr.length == 2){ 
                         resultDisplay.textContent = CalculatorOperation(temTerm);
                         term = resultDisplay.textContent + e.value;
                         console.log(term);
