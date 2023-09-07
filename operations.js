@@ -15,18 +15,35 @@ function isOperator(a){//
     return validOperators.includes(a);
 }
 
+function GetOperator(string){ // returns first operator found in string
+    let operator;
+    
+    for(let i = 0; i < string.length; i++){
+        
+        if(isOperator(string[i])){
+            
+            return string[i];
+        }
+    }
+    
+}
+
 function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
-    arr  = string.split('');
+   
+    let arr  = string.split('');
     console.log(arr);
     arr.forEach((element,i,array)=>{
         if (arr[i] == " "){
             arr[i] = ""
             }
     });
+    console.log(arr);
     string = arr.join("");
-    let operator = string[1];
-    let a = +string[0]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
-    let b = +string[2]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
+    
+    let operator = GetOperator(string);
+    let numArr = string.split(operator);
+    let a = +numArr[0]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
+    let b = +numArr[1]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
     
     
     if(operator == "+") return  add(a,b).toString(); 
@@ -39,32 +56,49 @@ function CalculatorOperation(string){ // may need to split into two functions la
 function populate(){ 
     const operatorDisplay = document.querySelector(".operations");
     const resultDisplay = document.querySelector(".result");
-    let term,nextnumber,result;
+    
+    let term;
+    
     term = "";
     const buttonList = document.querySelectorAll(".button");
     buttonList.forEach( e =>{
-        console.log(e);
+      
         e.addEventListener("click", ()=> {
             
             
             if(+e.value>= 0 ){ // dealing for case where button is a number
                 if (operatorDisplay.textContent[0] == "0"){
-                    console.log(e.value);
+
                     operatorDisplay.textContent = e.value;
                     term  += e.value;
-
                 }else{
+
                     operatorDisplay.textContent += e.value;
                     term  += e.value;
                 }
-                
 
-            }
+            } 
+            
             if(isOperator(e.value)){
-                resultDisplay.textContent += operatorDisplay.textContent + " " +e.value + " ";
+                
+                console.log(resultDisplay.textContent);
+                if(resultDisplay.textContent == "0"){
+                    resultDisplay.textContent = "";
+                }
+                
+                resultDisplay.textContent = operatorDisplay.textContent;
                 operatorDisplay.textContent = "0";
-                term  += " " + e.value + " ";
-               console.log(term);
+                
+                if(isOperator(term.charAt(term.length-1)))term = term.slice(0,-1);
+                term += e.value;
+                let termArray = term.split(e.value);
+                
+                if(termArray.length > 2){
+                    console.log(term.slice(0,-1));
+                    let result  =CalculatorOperation(term.slice(0,-1));
+                    console.log(result);
+                }
+                
                 
             }
             
@@ -75,7 +109,10 @@ function populate(){
 
 
 }
-
+//console.log(CalculatorOperation("1+1"));
 
 /* Dom Maniputlation*/
-const num = populate();
+//const num = populate();
+
+console.log(GetOperator("12334565-678954+"));
+console.log(CalculatorOperation("15+15"));
