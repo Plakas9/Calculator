@@ -43,8 +43,8 @@ function CalculatorOperation(string){ // may need to split into two functions la
     
     let operator = getOperator(string);
     let numArr = string.split(operator);
-    let a = +numArr[0]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
-    let b = +numArr[1]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
+    let a = parseFloat(numArr[0]); // may have to introduce try catch for NaN/undefined when expressions aren't valid
+    let b = parseFloat(numArr[1]); // may have to introduce try catch for NaN/undefined when expressions aren't valid
     
     
     if(operator == "+") return  add(a,b).toString(); 
@@ -67,7 +67,7 @@ function populate(){
         e.addEventListener("click", ()=> {
             
             
-            if(+e.value>= 0 ){ // dealing for case where button is a number
+            if(+e.value>= 0 || e.value == "."){ // dealing for case where button is a number
                 if (operatorDisplay.textContent[0] == "0"){
 
                     operatorDisplay.textContent = e.value;
@@ -104,6 +104,8 @@ function populate(){
                     }
                 }
             }
+
+            
         });
         
        
