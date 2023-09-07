@@ -15,7 +15,7 @@ function isOperator(a){//
     return validOperators.includes(a);
 }
 
-function GetOperator(string){ // returns first operator found in string
+function getOperator(string){ // returns last operator found in string
     let operator;
     
     for(let i = 0; i < string.length; i++){
@@ -26,6 +26,7 @@ function GetOperator(string){ // returns first operator found in string
         }
     }
     
+
 }
 
 function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
@@ -40,7 +41,7 @@ function CalculatorOperation(string){ // may need to split into two functions la
     console.log(arr);
     string = arr.join("");
     
-    let operator = GetOperator(string);
+    let operator = getOperator(string);
     let numArr = string.split(operator);
     let a = +numArr[0]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
     let b = +numArr[1]; // may have to introduce try catch for NaN/undefined when expressions aren't valid
@@ -76,32 +77,33 @@ function populate(){
                     operatorDisplay.textContent += e.value;
                     term  += e.value;
                 }
-
+                
             } 
             
             if(isOperator(e.value)){
+                // case#1 where the end of a string is already a operator
                 
-                console.log(resultDisplay.textContent);
-                if(resultDisplay.textContent == "0"){
-                    resultDisplay.textContent = "";
+                if(isOperator(term.charAt(term.length-1))){
+                    term = term.slice(0,-1); // remove so we can later replace with newly selected operator.
                 }
-                
-                resultDisplay.textContent = operatorDisplay.textContent;
-                operatorDisplay.textContent = "0";
-                
-                if(isOperator(term.charAt(term.length-1)))term = term.slice(0,-1);
                 term += e.value;
-                let termArray = term.split(e.value);
-                
-                if(termArray.length > 2){
-                    console.log(term.slice(0,-1));
-                    let result  =CalculatorOperation(term.slice(0,-1));
-                    console.log(result);
+                console.log(term);
+                resultDisplay.textContent = term.slice(0,-1);
+                operatorDisplay.textContent = "0";
+                temTerm = term.slice(0,-1); // gets term without last inputed operator
+                let operator = getOperator(temTerm);
+                console.log(isOperator(operator));
+                if(isOperator(operator)){ // 
+
+                    let arr = temTerm.split(operator);
+                    console.log(arr.length);
+                    if(arr.length == 2){
+                        resultDisplay.textContent = CalculatorOperation(temTerm);
+                        term = resultDisplay.textContent + e.value;
+                        console.log(term);
+                    }
                 }
-                
-                
             }
-            
         });
         
        
@@ -112,7 +114,4 @@ function populate(){
 //console.log(CalculatorOperation("1+1"));
 
 /* Dom Maniputlation*/
-//const num = populate();
-
-console.log(GetOperator("12334565-678954+"));
-console.log(CalculatorOperation("15+15"));
+const num = populate();
