@@ -32,13 +32,13 @@ function getOperator(string){ // returns last operator found in string
 function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
    
     let arr  = string.split('');
-    console.log(arr);
+    
     arr.forEach((element,i,array)=>{
         if (arr[i] == " "){
             arr[i] = ""
             }
     });
-    console.log(arr);
+    
     string = arr.join("");
     
     let operator = getOperator(string);
@@ -83,28 +83,25 @@ function populate(){
                     operatorDisplay.textContent += e.value;
                     term  += e.value;
                 }
-                console.log(term);
+                
             } 
             
-            if(isOperator(e.value)){
-                // case#1 where the end of a string is already a operator
+            if(isOperator(e.value)){ // operator input
                 
-                if(isOperator(term.charAt(term.length-1))){
+                if(isOperator(term.charAt(term.length-1))){ // case#1 where the end of a string is already a operator
                     term = term.slice(0,-1); // remove so we can later replace with newly selected operator.
                 }
-                // 
+                
                 term += e.value;
                 
-                // Case#2: where we add an operator first
-                if(isOperator(term)){ 
+                if(isOperator(term)){ // Case#2: where we add an operator first
                     term = "0" + term;
                 }
-                //
                 
                 
-                resultDisplay.textContent = term.slice(0,-1); 
+                resultDisplay.textContent = term.slice(0,-1);
                 operatorDisplay.textContent = "0";
-                temTerm = term.slice(0,-1); // gets term without last inputed operator (case for when two operators are selected) 
+                temTerm = term.slice(0,-1);             // We dont want the last inputed operator when evaluating the term.
                 let operator = getOperator(temTerm);
               
                 if(isOperator(operator)){ 
@@ -114,20 +111,32 @@ function populate(){
                     if(arr.length == 2){ 
                         resultDisplay.textContent = CalculatorOperation(temTerm);
                         term = resultDisplay.textContent + e.value;
-                        console.log(term);
+                        
                     }
                 }
             }
 
+            if(e.value == "="){
+                console.log(term);
+                resultDisplay.textContent = term + "="  + CalculatorOperation(term);
+                operatorDisplay.textContent = "0";
+            }
+            if(e.value == "c" || e.value == "d"){
+                if(e.value == "c") resultDisplay.textContent = "0"; 
+                operatorDisplay.textContent = "0";
+                
+            }
             
         });
         
        
     });
 
+   
+
 
 }
-//console.log(CalculatorOperation("1+1"));
+
 
 /* Dom Maniputlation*/
 const num = populate();
