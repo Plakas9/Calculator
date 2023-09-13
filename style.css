@@ -1,6 +1,6 @@
 body{
     display: flex;
-    background-color: orange;
+    background-color: black;
 }
 
 .calcContainer{
@@ -8,24 +8,27 @@ body{
     flex-direction: column;
     margin: auto;
     padding: 2%;
-    background-color: black;
+    background-color: lightgrey;
     border-radius:1rem;
-    
     margin-top: 10%;
-    gap: 20px;
+    gap: 10px;
+    height: 325px;
+    width: 200px;
     
     
 }
 .display{
 
-    background: #212121;
+    gap: 0px;
+    background: white;
     padding: 1rem;
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
-    color: white;
+    color: black;
     text-align: end;
 }
 .allButton{
+    gap: 2px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -34,21 +37,27 @@ body{
 }
 .row{
     display: flex;
-    gap: 0px;
+    gap: 2px;
 }
 .button{
     border-radius: 1rem;
-    height: 75px;
-    width: 75px;
-    background-color: darkgrey;
+    height: 50px;
+    width: 50px;
+    background-color: white;
 
 }
 .button#clear, .button#delete{
-    width: 150px;
+    width: 100px;
+    height: 50px;
 
     
 }
-
+#clear{
+    background-color: #faa ;
+}
+#delete{
+    background-color: #aaf;
+}
 #display{
     align-self: center;
 }
