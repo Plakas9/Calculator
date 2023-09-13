@@ -117,15 +117,44 @@ function populate(){
             }
 
             if(e.value == "="){
-                console.log(term);
-                resultDisplay.textContent = term + "="  + CalculatorOperation(term);
-                operatorDisplay.textContent = "0";
-            }
-            if(e.value == "c" || e.value == "d"){
-                if(e.value == "c") resultDisplay.textContent = "0"; 
-                operatorDisplay.textContent = "0";
                 
+                let index = false;
+                let operator;
+                if(isOperator(term[term.length-1])) term = term.slice(term, term.length-2);  // case where term ends in an operator.     
+                
+                for(let i = 0; i<term.length; i++){
+                    if(isOperator(term[i])) {
+                        operator=term[i]
+                        index = true;
+                    }
+                }
+                if(index){
+                    resultDisplay.textContent = CalculatorOperation(term);
+                    operatorDisplay.textContent = "0";
+                }
+                term = resultDisplay.textContent;
+                if(isOperator(operator)) term = term + operator;
+                console.log(term);
             }
+            
+            
+            if(e.value == "c" ){
+                resultDisplay.textContent = "0"; 
+                operatorDisplay.textContent = "0";
+                term = "";
+            }
+
+            
+            if(e.value == "d"){
+                if (term != ""){
+                    let OperatorText = operatorDisplay.textContent;
+                    let length = OperatorText.length;
+                    operatorDisplay.textContent = "0"
+                    term = resultDisplay.textContent;
+                    
+                }
+            }
+            
             
         });
         
