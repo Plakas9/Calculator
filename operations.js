@@ -48,7 +48,7 @@ function getOperator(string){ // returns last operator found in string
 }
 
 function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
-   
+   if(isOperator(string[0])) string = string.slice(1);
     let arr  = string.split('');
     
     arr.forEach((element,i,array)=>{
@@ -125,6 +125,7 @@ function populate(){
             if(e.value == "="){
                 
                 if(calculatable(term)) resultDisplay.textContent = "=" + CalculatorOperation(term); // perfect case where we have two numbers and a operator inbetween
+                term = "";
                 
             
             }
