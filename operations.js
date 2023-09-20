@@ -18,6 +18,7 @@ function isOperator(a){//
 
 function calculatable(string){
 
+if(string[0] == "*"|| string[0] == "/") return false;
 if(isOperator(string[0])) string = string.slice(1);
 
 
@@ -34,7 +35,7 @@ return false;
 }
 
 function getOperator(string){ // returns last operator found in string
-    let operator;
+    if(isOperator(string[0])) string = string.slice(1);
     
     for(let i = 0; i < string.length; i++){
         
@@ -48,7 +49,7 @@ function getOperator(string){ // returns last operator found in string
 }
 
 function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
-   if(isOperator(string[0])) string = string.slice(1);
+   
     let arr  = string.split('');
     
     arr.forEach((element,i,array)=>{
@@ -90,7 +91,7 @@ function populate(){
                 reset = false
             }
 
-
+            
             if((e.value == "c" || reset == true) && e.value != "="){
                 resultDisplay.textContent = "0"; 
                 operatorDisplay.textContent = "0";
@@ -136,13 +137,18 @@ function populate(){
                console.log(term);
             }
 
-            if(e.value == "="){
+            if(e.value == "=" && reset == false){ // if
                 
-                if(calculatable(term)) resultDisplay.textContent = "=" + CalculatorOperation(term); 
+                if(calculatable(term)) resultDisplay.textContent = "=" + CalculatorOperation(term);  // perfect case two numbers with operator inbetween
                 if(!calculatable(term)){
-                    if(term[0] == "*" || term[0]== "/"){
+                    if(term[0] == "*" || term[0]== "/"){ 
                         resultDisplay.textContent = 'Error - uncomputable term, press "C" to reset. ';
+                    }else{
+                        if(isOperator(term[term.length-1])) term = term.slice(0,-1); // case where we have a number and a operator.
+                        if(term[0] == "-" || term[0]== "+") resultDisplay.textContent = "=" + CalculatorOperation("0" + term);
+                        if(typeof(term[0] == "number")) resultDisplay.textContent = "=" + CalculatorOperation("0"+"+"+ term); 
                     }
+                    
                 }
                 term = "";
                 reset = true;
@@ -181,3 +187,5 @@ function populate(){
 /* Dom Maniputlation*/
 const num = populate();
 // testing branch
+console.log(calculatable("-4-4"));
+console.log(CalculatorOperation("-4-4"));
