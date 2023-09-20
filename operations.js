@@ -25,7 +25,7 @@ function getOperator(string){ // returns last operator found in string
             return string[i];
         }
     }
-    
+    return 0;
 
 }
 
@@ -69,7 +69,7 @@ function populate(){
             
             if(+e.value>= 0 || e.value == "."){ // dealing for case where button is a number or decimal.
 
-                if(term.charAt(term.length-1)=="." && e.value =="."){
+                if(term.charAt(term.length-1)=="." && e.value =="."){ // case where a decimal is the plast element and is then inputed again
                     term = term.slice(0,-1);
                     operatorDisplay.textContent = operatorDisplay.textContent.slice(0,-1);
                 }
@@ -84,75 +84,23 @@ function populate(){
                     term  += e.value;
                 }
                 
+                console.log(term);
             } 
             
             if(isOperator(e.value)){ // operator input
-                
-                if(isOperator(term.charAt(term.length-1))){ // case#1 where the end of a string is already a operator
-                    term = term.slice(0,-1); // remove so we can later replace with newly selected operator.
-                }
-                
-                term += e.value;
-                
-                if(isOperator(term)){ // Case#2: where we add an operator first
-                    term = "0" + term;
-                }
-                
-                
-                resultDisplay.textContent = term.slice(0,-1);
-                operatorDisplay.textContent = "0";
-                temTerm = term.slice(0,-1);             // We dont want the last inputed operator when evaluating the term.
-                let operator = getOperator(temTerm);
-              
-                if(isOperator(operator)){ 
-
-                    let arr = temTerm.split(operator);
-                    console.log(arr.length);
-                    if(arr.length == 2){ 
-                        resultDisplay.textContent = CalculatorOperation(temTerm);
-                        term = resultDisplay.textContent + e.value;
-                        
-                    }
-                }
+               
+               
             }
 
             if(e.value == "="){
                 
-                let index = false;
-                let operator;
-                if(isOperator(term[term.length-1])) term = term.slice(term, term.length-2);  // case where term ends in an operator.     
                 
-                for(let i = 0; i<term.length; i++){
-                    if(isOperator(term[i])) {
-                        operator=term[i]
-                        index = true;
-                    }
-                }
-                if(index){
-                    resultDisplay.textContent = CalculatorOperation(term);
-                    operatorDisplay.textContent = "0";
-                }
-                term = resultDisplay.textContent;
-                if(isOperator(operator)) term = term + operator;
-                console.log(term);
-            }
-            
-            
-            if(e.value == "c" ){
-                resultDisplay.textContent = "0"; 
-                operatorDisplay.textContent = "0";
-                term = "";
+               
             }
 
             
             if(e.value == "d"){
-                if (term != ""){
-                    let OperatorText = operatorDisplay.textContent;
-                    let length = OperatorText.length;
-                    operatorDisplay.textContent = "0"
-                    term = resultDisplay.textContent;
-                    
-                }
+                
             }
             
             
