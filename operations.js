@@ -150,9 +150,10 @@ function populate(){
                     if(term[0] == "*" || term[0]== "/"){ 
                         resultDisplay.textContent = 'Error - uncomputable term, press "C" to reset. ';
                     }else{
-                        if(isOperator(term[term.length-1])) term = term.slice(0,-1); // case where we have a number and a operator.
-                        if(term[0] == "-" || term[0]== "+") resultDisplay.textContent = "=" + CalculatorOperation("0" + term);
-                        if(typeof(term[0] == "number")) resultDisplay.textContent = "=" + CalculatorOperation("0"+"+"+ term); 
+                        if(isOperator(term[term.length-1])) operatorDisplay.textContent = term + "0" // case where we have a number and a operator.
+                        if(term[0] == "-" || term[0]== "+") resultDisplay.textContent = "=" + term;
+                        console.log(term);
+                        if(typeof(term[0] == "number"))  resultDisplay.textContent = "=" + CalculatorOperation("0"+"+"+ term); 
                     }
                     
                 }
