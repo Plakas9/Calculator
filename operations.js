@@ -15,6 +15,24 @@ function isOperator(a){//
     return validOperators.includes(a);
 }
 
+
+function calculatable(string){
+
+if(isOperator(string[0])) string = string.slice(1);
+
+
+if(isOperator(getOperator(string))){
+    let arr = string.split(getOperator(string));
+    if(arr.length == 2 && arr[0] != '' && arr[1] != ''){
+        return true;
+    }
+}
+
+return false;
+
+    
+}
+
 function getOperator(string){ // returns last operator found in string
     let operator;
     
@@ -83,24 +101,45 @@ function populate(){
                     operatorDisplay.textContent += e.value;
                     term  += e.value;
                 }
-                
                 console.log(term);
+                
             } 
             
             if(isOperator(e.value)){ // operator input
-               
-               
+                
+                if(isOperator(term.charAt(term.length-1))){ // case#1 where the end of a string is already a operator
+                    term = term.slice(0,-1); // remove so we can later replace with newly selected operator.
+                }
+
+                if(calculatable(term)){
+                    term = CalculatorOperation(term);
+                    resultDisplay.textContent = term;
+                }
+
+
+                term += e.value;
+                operatorDisplay.textContent = term;
+               console.log(term);
             }
 
             if(e.value == "="){
                 
+                if(calculatable(term)) resultDisplay.textContent = "=" + CalculatorOperation(term); // perfect case where we have two numbers and a operator inbetween
                 
-               
+            
             }
+                   
+            
 
             
             if(e.value == "d"){
                 
+            }
+
+            if(e.value == "c"){
+                resultDisplay.textContent = "0"; 
+                operatorDisplay.textContent = "0";
+                term = "";
             }
             
             
