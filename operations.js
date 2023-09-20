@@ -35,7 +35,7 @@ return false;
 }
 
 function getOperator(string){ // returns last operator found in string
-    if(isOperator(string[0])) string = string.slice(1);
+    if(isOperator(string[0])) string = string.slice(1); // this operator defines the symbol of the first number 
     
     for(let i = 0; i < string.length; i++){
         
@@ -49,7 +49,12 @@ function getOperator(string){ // returns last operator found in string
 }
 
 function CalculatorOperation(string){ // may need to split into two functions later on. lets see if i can work with one.
-   
+   let sign = "";
+    if(isOperator(string[0])){
+        sign = string[0];
+        string = string.slice(1);
+    } 
+
     let arr  = string.split('');
     
     arr.forEach((element,i,array)=>{
@@ -62,6 +67,7 @@ function CalculatorOperation(string){ // may need to split into two functions la
     
     let operator = getOperator(string);
     let numArr = string.split(operator);
+    numArr[0] = sign + numArr[0];
     let a = parseFloat(numArr[0]); // may have to introduce try catch for NaN/undefined when expressions aren't valid
     let b = parseFloat(numArr[1]); // may have to introduce try catch for NaN/undefined when expressions aren't valid
     
@@ -188,4 +194,4 @@ function populate(){
 const num = populate();
 // testing branch
 console.log(calculatable("-4-4"));
-console.log(CalculatorOperation("-4-4"));
+console.log(CalculatorOperation("3-4"));
