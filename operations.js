@@ -77,14 +77,28 @@ function populate(){
     const resultDisplay = document.querySelector(".result");
     
     let term;
-    
     term = "";
+    let reset = false;
     const buttonList = document.querySelectorAll(".button");
     buttonList.forEach( e =>{
       
         e.addEventListener("click", ()=> {
             
-            
+            if( ["+","-","*","/"].includes(e.value) && reset == true){ // called only after the equals button has been called.
+                term = resultDisplay.textContent;
+                term = term.slice(1);
+                reset = false
+            }
+
+
+            if((e.value == "c" || reset == true) && e.value != "="){
+                resultDisplay.textContent = "0"; 
+                operatorDisplay.textContent = "0";
+                term = "";
+                reset = false;
+            }
+        
+
             if(+e.value>= 0 || e.value == "."){ // dealing for case where button is a number or decimal.
 
                 if(term.charAt(term.length-1)=="." && e.value =="."){ // case where a decimal is the plast element and is then inputed again
@@ -124,8 +138,14 @@ function populate(){
 
             if(e.value == "="){
                 
-                if(calculatable(term)) resultDisplay.textContent = "=" + CalculatorOperation(term); // perfect case where we have two numbers and a operator inbetween
+                if(calculatable(term)) resultDisplay.textContent = "=" + CalculatorOperation(term); 
+                if(!calculatable(term)){
+                    if(term[0] == "*" || term[0]== "/"){
+                        resultDisplay.textContent = 'Error - uncomputable term, press "C" to reset. ';
+                    }
+                }
                 term = "";
+                reset = true;
                 
             
             }
@@ -135,13 +155,16 @@ function populate(){
             
             if(e.value == "d"){
                 
+                term = term.slice(0,term.length-1);
+                if(term == ""){ operatorDisplay.textContent = "0";}else{
+                    operatorDisplay.textContent = term;
+                }
+
+                resultDisplay.textContent = "0";
+                
             }
 
-            if(e.value == "c"){
-                resultDisplay.textContent = "0"; 
-                operatorDisplay.textContent = "0";
-                term = "";
-            }
+           
             
             
         });
